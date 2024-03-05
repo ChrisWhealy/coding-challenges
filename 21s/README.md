@@ -1,20 +1,12 @@
-Can you beat the dealer at 21
-======================================
+# Black Jack
 
-#### Model the game
-* create a single deck of playing cards
-* two players (called Sam and the Dealer) who will play against each other
-* each player is given two cards from the top of a shuffled deck of cards
+Simulation of a a game of Black Jack between Sam and the Dealer
 
-#### Rules to implement
-* determine score of a hand[1]
-* check if either player has blackjack (21) with their initial hand and wins the game
-* if neither player has blackjack then Sam can start drawing cards from the top of the deck
-* Sam should stop drawing cards from the deck if their total reaches 17 or higher
-* Sam has lost the game if their total is higher than 21
-* when Sam has stopped drawing cards the Dealer can start drawing cards from the top of the deck
-* the Dealer should stop drawing cards when their total is higher than Sam.
-* the Dealer has lost the game if their total is higher than 21
-* determine which player wins the game
-
-[1] Numbered cards are their point value. Jack, Queen and King count as 10 and Ace counts as 11.
+* Sam and the dealer are both dealt 2 cards
+* If either (or both) of them holds 21, the winner(s) is/are declared
+* Sam plays first and keeps drawing cards until his total reaches at 17 or more
+* If Sam's total is > 21, he is bust and the dealer starts to play
+* If Sam's total is >= 17 but <= 21, then he sticks and the dealer starts to play
+* The Dealer only needs to draw a card if his total is < 17
+* The Dealer keeps drawing until either he goes bust or his total exceeds Sam's
+* The winner is then declared, bearing in mind that it could be a tie
