@@ -10,4 +10,4 @@ It shows a glider that moves diaga=onally down the screen, and a light-weight gl
 $ node game-of-life.js
 ```
 
-This game will run forever, so to stop it, press `Ctrl-c`
+This game will run continually until you press `Ctrl-c`
