@@ -1,6 +1,8 @@
 # Black Jack
 
-Simulation of a a game of Black Jack between Sam and the Dealer
+Simulation of a game of Black Jack between Sam and the Dealer
+
+## Order of Play
 
 * Sam and the dealer are both dealt 2 cards
 * If either (or both) of them holds 21, the winner(s) is/are declared
@@ -10,3 +12,33 @@ Simulation of a a game of Black Jack between Sam and the Dealer
 * The Dealer only needs to draw a card if his total is < 17
 * The Dealer keeps drawing until either he goes bust or his total exceeds Sam's
 * The winner is then declared, bearing in mind that it could be a tie
+
+## Execution
+
+```shell
+$ node index.mjs
+```
+
+Cards are then dealt randomly, and play could look like this
+
+```shell
+Sam: PLAY, Hand: 3♣︎,J♥︎, Score: 13
+Dealer: PLAY, Hand: 6♦︎,6♣︎, Score: 12
+Sam starts to play
+Sam: STICK, Hand: 3♣︎,J♥︎,7♥︎, Score: 20
+Dealer starts to play
+Dealer: BUST, Hand: 6♦︎,6♣︎,J♦︎, Score: 22
+
+WINNER: Sam
+```
+
+or this...
+
+```shell
+Sam: STICK, Hand: 9♣︎,9♦︎, Score: 18
+Dealer: PLAY, Hand: 8♠︎,7♣︎, Score: 15
+Dealer starts to play
+Dealer: STICK, Hand: 8♠︎,7♣︎,4♣︎, Score: 19
+
+WINNER: Dealer
+```
