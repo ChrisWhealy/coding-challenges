@@ -1,0 +1,17 @@
+{
+  "name": "election-results",
+  "version": "0.1.0",
+  "description": "",
+  "main": "election-results.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "Game of life"
+  ],
+  "author": "Chris Whealy",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
