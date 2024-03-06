@@ -1,8 +1,11 @@
 # Black Jack
 
-Simulation of a game of Black Jack between Sam and the Dealer
+## Model the game
+* create a single deck of playing cards
+* two players (called Sam and the Dealer) who will play against each other
+* each player is given two cards from the top of a shuffled deck of cards
 
-## Order of Play
+## Rules to Implement
 
 * Sam and the dealer are both dealt 2 cards
 * If either (or both) of them holds 21, the winner(s) is/are declared
