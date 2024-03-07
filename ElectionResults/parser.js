@@ -6,7 +6,7 @@ const asPercentageOf = total => someValue => Math.floor((someValue / total) * 10
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 const parse = line => {
-  let parsedLine
+  let eResult
 
   let fragments = line.split(",").map(f => f.trim())
   let constituencyName = fragments[0]
@@ -14,15 +14,15 @@ const parse = line => {
   // If the first field contains either an integer or a party abbreviation, then bail out early because the constituency
   // name is missing: we have no idea where these votes were cast
   if (Number.isInteger(parseInt(constituencyName)) || getPartyName(constituencyName) !== NOT_FOUND) {
-    parsedLine = new ElectionResult("Unknown")
-    parsedLine.errorMessages.push("Missing constituency name")
+    eResult = new ElectionResult("Unknown")
+    eResult.errorMessages.push("Missing constituency name")
 
-    return parsedLine
+    return eResult
   } else {
-    parsedLine = new ElectionResult(constituencyName)
+    eResult = new ElectionResult(constituencyName)
   }
 
-  parsedLine.maxPartyNameLength = maxPartyNameLength
+  eResult.maxPartyNameLength = maxPartyNameLength
 
   // Parse the remaining fragments
   for (let i = 1; i < fragments.length; i++) {
@@ -33,27 +33,27 @@ const parse = line => {
     // Is the first field a vote count?
     if (isNaN(maybeVoteCount)) {
       // Nope, so we got a value we assume to be a party abbreviation
-      parsedLine.errorMessages.push(`Vote count for ${getPartyName(fragments[i])} missing`)
+      eResult.errorMessages.push(`Vote count for ${getPartyName(fragments[i])} missing`)
       continue
     }
 
     // Is the second field a party abbreviation?
     if (maybePartyName === NOT_FOUND) {
       // Nope, so we got a vote count, but for an unknown party
-      parsedLine.errorMessages.push(`Vote count of ${maybeVoteCount} found for unknown party`)
+      eResult.errorMessages.push(`Vote count of ${maybeVoteCount} found for unknown party`)
       continue
     }
 
-    parsedLine.addResult(maybePartyName, maybeVoteCount)
+    eResult.addResult(maybePartyName, maybeVoteCount)
     i++
   }
 
-  let asPercentage = asPercentageOf(parsedLine.totalVotes)
+  let asPercentage = asPercentageOf(eResult.totalVotes)
 
   // Now that the total number of votes is known, go back and fill in the percentage votes per party
-  parsedLine.results.forEach(party => party.percentage = asPercentage(party.totalVotes))
+  eResult.results.forEach(party => party.percentage = asPercentage(party.totalVotes))
 
-  return parsedLine
+  return eResult
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
