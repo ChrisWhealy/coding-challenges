@@ -7,6 +7,9 @@ const EX = "X"
 const OH = "O"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Returns a function that plays through a set of moves on a board of a given size
+// Any supplied moves beyond the winning move are not played
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 const playConnect4OnGrid = (cols, rows) =>
   moves => {
     let grid = new Grid(cols, rows)
@@ -29,8 +32,8 @@ const playConnect4 = playConnect4OnGrid(COLS, ROWS)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Vertical winner
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let moves = [[0, EX], [1, OH], [0, EX], [2, OH], [0, EX], [3, OH], [0, EX]]
-let result = playConnect4(moves)
+moves = [[0, EX], [1, OH], [0, EX], [2, OH], [0, EX], [3, OH], [0, EX]]
+result = playConnect4(moves)
 
 console.log(`${result.grid}`)
 console.log(`${result.winner}`)

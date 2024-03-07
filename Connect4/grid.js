@@ -4,18 +4,19 @@ const DIR_DIAG_UP = "diagonally up"
 const DIR_RIGHT = "to the right"
 const DIR_DIAG_DOWN = "diagonally down"
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class Winner {
   player
   direction
   column
   row
+  errMsg = ""
 
   constructor(player, rowIdx, colIdx, direction) {
     this.player = player
     this.direction = direction
     this.column = colIdx + 1
     this.row = rowIdx + 1
-
   }
 
   toString() {
@@ -23,8 +24,10 @@ class Winner {
   }
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class Grid {
   #emptyCell = "."
+  #countersPlayed = 0
 
   // Offset multipliers used to derive the location of a neighbour lying in a particular direction
   // [<column multiplier>, <row multiplier>]
@@ -40,7 +43,7 @@ class Grid {
   columnCount
   cells = []
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #neighbour(row, col, rowOffset, colOffset) {
     let targetRow = row + rowOffset
     let targetCol = col + colOffset
@@ -51,7 +54,7 @@ class Grid {
       : null
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Check for a wining line in the direction determined by the values in the offsetMultiplier array
   #checkDirection(col, row, offsetMultiplier) {
     // Should we bail out early due to empty row?
@@ -69,7 +72,7 @@ class Grid {
     return winningLine.every(v => v === first)
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #checkForWinner() {
     let direction = ""
     let c = -1
@@ -87,22 +90,39 @@ class Grid {
     return direction !== "" ? new Winner(this.cells[c][r], r, c, direction) : null
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  get #boardIsFull() {
+    return this.#countersPlayed >= this.rowCount * this.columnCount
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   constructor(cols, rows) {
     this.rowCount = rows
     this.columnCount = cols
     this.cells = [...new Array(cols)].map(() => [])
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   addCounter(col, counterType) {
-    // No range checks are made for the column number or the number of counters added to a particular column
-    this.cells[col].push(counterType)
+    // Check the column number is within range
+    if (col >= this.columnCount) {
+      let errResponse = new Winner(null, -2, -2, null)
+      errResponse.errMsg = `Column number must be between 0 and ${this.columnCount - 1}`
+      return errResponse
+    } else
+      // Check that the board is not already full
+      if (this.#boardIsFull) {
+        let errResponse = new Winner(null, -2, -2, null)
+        errResponse.errMsg = `Game Over. The board is full!`
+        return errResponse
+      }
 
+    this.#countersPlayed++
+    this.cells[col].push(counterType)
     return this.#checkForWinner()
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   toString() {
     let gridStr = []
 
@@ -121,6 +141,7 @@ class Grid {
   }
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 module.exports = {
   Grid,
   DIR_UP,
