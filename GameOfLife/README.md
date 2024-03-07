@@ -10,7 +10,7 @@ The next state of the board is determined by examining its current state and app
 2. A living cell remains alive if it has exactly 2 or 3 living neighbours
 3. A living cell dies from loneliness if it has less than 2 living neighbours
 4. A living cell dies from over-crowding if it has more than 3 living neighbours
-5. The board must wrap
+5. The board must wrap both vertically and horizontally
 
 ## Implementation
 
