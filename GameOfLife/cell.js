@@ -49,17 +49,20 @@ class Cell {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  // Return a new cell whose state is based on the state of its old neighbours
+  // Return a new cell whose state is based on the state of its surrounding neighbours
   newState(board) {
     let nCount = this.countNeighbours(board)
     let newCell = new Cell(this.rowIdx, this.colIdx)
 
-    newCell.state = this.state   // Assume the cell's current state will be preserved
-
     if (this.state === 1 && (nCount < 2 || nCount > 3)) {
-      newCell.state = 0   // Cell dies either from loneliness or over-crowding
+      // Cell dies either from loneliness or over-crowding
+      newCell.state = 0
     } else if (this.state === 0 && nCount === 3) {
-      newCell.state = 1   // Cell comes to life
+      // Cell comes to life
+      newCell.state = 1
+    } else {
+      // Cell's current state is preserved
+      newCell.state = this.state
     }
 
     return newCell
