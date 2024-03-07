@@ -22,8 +22,8 @@ class Cell {
 
       // Check for row underflow or overflow
       switch (true) {
-        case thisRow < 0: thisRow = rowCount - 1; break
-        case thisRow >= rowCount: thisRow = 0; break
+        case thisRow < 0: thisRow = rowCount - 1; break // Wrap to bottom row
+        case thisRow >= rowCount: thisRow = 0; break    // Wrap to top roww
         default:
       }
 
@@ -36,8 +36,8 @@ class Cell {
 
         // Check for column underflow or overflow
         switch (true) {
-          case thisCol < 0: thisCol = colCount - 1; break
-          case thisCol >= colCount: thisCol = 0; break
+          case thisCol < 0: thisCol = colCount - 1; break // Wrap to righthand column
+          case thisCol >= colCount: thisCol = 0; break    // Wrap to lefthand column
           default:
         }
 
