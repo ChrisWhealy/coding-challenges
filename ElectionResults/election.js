@@ -1,5 +1,5 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-class ByElectionResult {
+class ElectionResult {
   maxPartyNameLength = 0
 
   constituencyName
@@ -12,7 +12,6 @@ class ByElectionResult {
     this.totalVotes = 0
     this.errorMessages = []
     this.results = []
-
   }
 
   addResult(pName, votes) {
@@ -21,12 +20,8 @@ class ByElectionResult {
   }
 
   toString() {
-    return this.results.reduce((str, result) => {
-      str += `${result}\n`
-      return str
-    }, `${this.constituencyName}:\n`)
+    return this.results.reduce((str, result) => { str += `${result}\n`; return str }, `${this.constituencyName}:\n`)
   }
-
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,6 +46,6 @@ class PartyResult {
 }
 
 module.exports = {
-  ByElectionResult,
+  ElectionResult: ElectionResult,
   PartyResult
 }

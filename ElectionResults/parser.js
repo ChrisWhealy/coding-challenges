@@ -1,4 +1,4 @@
-const { ByElectionResult } = require('./byElection')
+const { ElectionResult } = require('./election')
 const { PARTIES, getPartyName, NOT_FOUND } = require('./parties')
 
 // Round percentage to 2dp
@@ -12,14 +12,14 @@ const parse = line => {
   let constituencyName = fragments[0]
 
   // If the first field contains either an integer or a party abbreviation, then bail out early because the constituency
-  // name is missing and so we have no idea where these votes have been cast
+  // name is missing: we have no idea where these votes were cast
   if (Number.isInteger(parseInt(constituencyName)) || getPartyName(constituencyName) !== NOT_FOUND) {
-    parsedLine = new ByElectionResult("Unknown")
+    parsedLine = new ElectionResult("Unknown")
     parsedLine.errorMessages.push("Missing constituency name")
 
     return parsedLine
   } else {
-    parsedLine = new ByElectionResult(constituencyName)
+    parsedLine = new ElectionResult(constituencyName)
   }
 
   // Calculate the longest party name
@@ -46,7 +46,6 @@ const parse = line => {
     }
 
     parsedLine.addResult(maybePartyName, maybeVoteCount)
-
     i++
   }
 
