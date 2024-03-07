@@ -25,12 +25,8 @@ module.exports = {
   NOT_FOUND,
 
   getPartyName: abbrev => {
-    PARTIES.find(p => p.abbreviation === abbrev)
-    for (let i = 0; i < PARTIES.length; i++) {
-      if (PARTIES[i].abbreviation === abbrev) return PARTIES[i].partyName
-    }
-
-    return NOT_FOUND
+    let party = PARTIES.find(p => p.abbreviation === abbrev)
+    return !!party ? party.partyName : NOT_FOUND
   },
 
   maxPartyNameLength: PARTIES.reduce((acc, p) => Math.max(acc, p.partyName.length), 0)
