@@ -1,5 +1,5 @@
 const { ElectionResult } = require('./election')
-const { PARTIES, getPartyName, NOT_FOUND } = require('./parties')
+const { getPartyName, NOT_FOUND, maxPartyNameLength } = require('./parties')
 
 // Round percentage to 2dp
 const asPercentageOf = total => someValue => Math.floor((someValue / total) * 10000) / 100
@@ -22,8 +22,7 @@ const parse = line => {
     parsedLine = new ElectionResult(constituencyName)
   }
 
-  // Calculate the longest party name
-  parsedLine.maxPartyNameLength = PARTIES.reduce((acc, p) => Math.max(acc, p.partyName.length), 0)
+  parsedLine.maxPartyNameLength = maxPartyNameLength
 
   // Parse the remaining fragments
   for (let i = 1; i < fragments.length; i++) {

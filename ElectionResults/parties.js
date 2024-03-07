@@ -1,11 +1,21 @@
+class Party {
+  abbreviation
+  partyName
+
+  constructor(pName, abbrev) {
+    this.partyName = pName
+    this.abbreviation = abbrev
+  }
+}
+
 const PARTIES = [
-  { "abbreviation": "C", "partyName": "Conservative Party" },
-  { "abbreviation": "L", "partyName": "Labour Party" },
-  { "abbreviation": "UKIP", "partyName": "UK Independence Party" },
-  { "abbreviation": "LD", "partyName": "Liberal Democrats" },
-  { "abbreviation": "G", "partyName": "Green Party" },
-  { "abbreviation": "Ind", "partyName": "Independent" },
-  { "abbreviation": "SNP", "partyName": "Scottish National Party" },
+  new Party("Conservative Party", "C"),
+  new Party("Labour Party", "L"),
+  new Party("UK Independence Party", "UKIP"),
+  new Party("Liberal Democrats", "LD"),
+  new Party("Green Party", "G"),
+  new Party("Independent", "Ind"),
+  new Party("Scottish National Party", "SNP"),
 ]
 
 const NOT_FOUND = "Not found"
@@ -21,6 +31,7 @@ module.exports = {
     }
 
     return NOT_FOUND
-  }
+  },
 
+  maxPartyNameLength: PARTIES.reduce((acc, p) => Math.max(acc, p.partyName.length), 0)
 }
