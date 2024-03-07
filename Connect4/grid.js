@@ -20,7 +20,9 @@ class Winner {
   }
 
   toString() {
-    return `${this.player}'s win ${this.direction} starting at column ${this.column}, row ${this.row}`
+    return !!this.player
+      ? `${this.player}'s win ${this.direction} starting at column ${this.column}, row ${this.row}`
+      : `No winner`
   }
 }
 
@@ -48,7 +50,7 @@ class Grid {
     let targetRow = row + rowOffset
     let targetCol = col + colOffset
 
-    // Return the value of the neighbour after first avoiding under- or overflow
+    // Return the value of the neighbour as long as under- or overflow has not occured
     return (targetRow < this.rowCount && targetRow >= 0 && targetCol < this.columnCount && targetCol >= 0)
       ? this.cells[targetCol][targetRow]
       : null
@@ -57,7 +59,7 @@ class Grid {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Check for a wining line in the direction determined by the values in the offsetMultiplier array
   #checkDirection(col, row, offsetMultiplier) {
-    // Should we bail out early due to empty row?
+    // Bail out early if the entire row is empty
     if (row >= this.cells[col].length) {
       return false
     }

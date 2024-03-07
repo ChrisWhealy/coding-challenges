@@ -5,7 +5,7 @@ const { DIR_UP, DIR_DIAG_UP, DIR_RIGHT, DIR_DIAG_DOWN } = require('../grid')
 // Error state
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test('should stop with "column out of range" error', () => {
-  let moves = [[7, EX]]
+  let moves = [[7, EX]]  // Column number out of range
   let result = playConnect4OnGrid(7, 6)(moves)
 
   expect(result.winner.player).toBeNull()
@@ -21,7 +21,7 @@ test('should stop with "board is full" error', () => {
     [1, OH], [0, EX], [3, OH], [2, EX], [4, OH], [6, EX], [5, OH],
     [3, EX], [2, OH], [1, EX], [0, OH], [4, EX], [5, OH], [6, EX],
     [0, OH], [1, EX], [2, OH], [4, EX], [6, OH], [5, EX], [3, OH], // Board is now full
-    [0, OH]  // This move is one too many
+    [0, OH]  // This move is one too many and should trigger an error
   ]
   let result = playConnect4OnGrid(7, 6)(moves)
 
