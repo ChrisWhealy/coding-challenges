@@ -3,51 +3,76 @@ const { Grid } = require('./grid')
 const COLS = 7
 const ROWS = 6
 
-const EX = " X "
-const OH = " O "
+const EX = "X"
+const OH = "O"
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Vertical winner in column 1
+const playConnect4OnGrid = (cols, rows) =>
+  moves => {
+    let grid = new Grid(cols, rows)
+    let result = { winner: null, grid }
+
+    for (let m = 0; m < moves.length; m++) {
+      let maybeWinner = grid.addCounter.apply(grid, moves[m])
+
+      if (maybeWinner) {
+        result.winner = maybeWinner
+        break
+      }
+    }
+
+    return result
+  }
+
+const playConnect4 = playConnect4OnGrid(COLS, ROWS)
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-let grid = new Grid(COLS, ROWS)
-let maybeWinner = null
+// Vertical winner
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let moves = [[0, EX], [1, OH], [0, EX], [2, OH], [0, EX], [3, OH], [0, EX]]
+let result = playConnect4(moves)
 
-maybeWinner = grid.addCounter(0, OH)
-maybeWinner = grid.addCounter(0, OH)
-maybeWinner = grid.addCounter(0, EX)
-maybeWinner = grid.addCounter(0, EX)
-maybeWinner = grid.addCounter(0, EX)
-maybeWinner = grid.addCounter(0, EX)
-
-console.log(`${grid}`)
-console.log(JSON.stringify(maybeWinner))
+console.log(`${result.grid}`)
+console.log(`${result.winner}`)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-grid = new Grid(COLS, ROWS)
+// Upwards diagonal winner
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+moves = [
+  // First row
+  [0, EX], [3, OH], [1, EX], [2, OH],
+  // Second row
+  [0, EX], [2, OH], [1, EX], [3, OH],
+  // Third row
+  [0, EX], [1, OH], [2, EX], [3, OH],
+  // Fourth row
+  [3, EX], [1, OH], [3, EX], [2, OH]
+]
+result = playConnect4(moves)
 
-// First row
-maybeWinner = grid.addCounter(0, EX)
-maybeWinner = grid.addCounter(1, EX)
-maybeWinner = grid.addCounter(2, EX)
-maybeWinner = grid.addCounter(3, OH)
+console.log(`${result.grid}`)
+console.log(`${result.winner}`)
 
-// Second row
-maybeWinner = grid.addCounter(0, EX)
-maybeWinner = grid.addCounter(1, EX)
-maybeWinner = grid.addCounter(2, OH)
-maybeWinner = grid.addCounter(3, EX)
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Downwards diagonal winner
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+moves = [
+  // First row
+  [0, EX], [3, OH], [1, EX], [2, OH],
+  // Second row
+  [0, EX], [2, OH], [1, EX], [3, OH],
+  // Third row
+  [0, EX], [1, OH], [2, EX], [3, OH],
+  // Fourth row
+  [2, EX], [0, OH]
+]
+result = playConnect4(moves)
 
-// Third row
-maybeWinner = grid.addCounter(0, EX)
-maybeWinner = grid.addCounter(1, OH)
-maybeWinner = grid.addCounter(2, EX)
-maybeWinner = grid.addCounter(3, EX)
+console.log(`${result.grid}`)
+console.log(`${result.winner}`)
 
-// Fourth row
-maybeWinner = grid.addCounter(0, OH)
-maybeWinner = grid.addCounter(1, EX)
-maybeWinner = grid.addCounter(2, EX)
-maybeWinner = grid.addCounter(3, OH)
-
-console.log(`${grid}`)
-console.log(JSON.stringify(maybeWinner))
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+module.exports = {
+  playConnect4OnGrid,
+  EX, OH,
+}

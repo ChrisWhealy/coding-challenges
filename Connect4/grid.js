@@ -1,7 +1,30 @@
 const CRLF = "\n"
+const DIR_UP = "upwards"
+const DIR_DIAG_UP = "diagonally up"
+const DIR_RIGHT = "to the right"
+const DIR_DIAG_DOWN = "diagonally down"
+
+class Winner {
+  player
+  direction
+  column
+  row
+
+  constructor(player, rowIdx, colIdx, direction) {
+    this.player = player
+    this.direction = direction
+    this.column = colIdx + 1
+    this.row = rowIdx + 1
+
+  }
+
+  toString() {
+    return `${this.player}'s win ${this.direction} starting at column ${this.column}, row ${this.row}`
+  }
+}
 
 class Grid {
-  #emptyCell = " . "
+  #emptyCell = "."
 
   // Offset multipliers used to derive the location of a neighbour lying in a particular direction
   // [<column multiplier>, <row multiplier>]
@@ -48,27 +71,20 @@ class Grid {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #checkForWinner() {
-    let winDirection = ""
+    let direction = ""
     let c = -1
     let r = -1
 
     outer: for (c = 0; c < this.columnCount; c++) {
       for (r = 0; r < this.rowCount; r++) {
-        if (this.#checkDirection(c, r, this.#up)) { winDirection = "Up"; break outer }
-        if (this.#checkDirection(c, r, this.#diagUp)) { winDirection = "DiagUp"; break outer }
-        if (this.#checkDirection(c, r, this.#right)) { winDirection = "Right"; break outer }
-        if (this.#checkDirection(c, r, this.#diagDown)) { winDirection = "DiagDown"; break outer }
+        if (this.#checkDirection(c, r, this.#up)) { direction = DIR_UP; break outer }
+        if (this.#checkDirection(c, r, this.#diagUp)) { direction = DIR_DIAG_UP; break outer }
+        if (this.#checkDirection(c, r, this.#right)) { direction = DIR_RIGHT; break outer }
+        if (this.#checkDirection(c, r, this.#diagDown)) { direction = DIR_DIAG_DOWN; break outer }
       }
     }
 
-    return winDirection !== ""
-      ? {
-        "player": this.cells[c][r],
-        "winDirection": winDirection,
-        "column": c + 1,
-        "row": r + 1,
-      }
-      : null
+    return direction !== "" ? new Winner(this.cells[c][r], r, c, direction) : null
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -94,7 +110,7 @@ class Grid {
       let thisRow = CRLF
 
       for (let c = 0; c < this.columnCount; c++) {
-        thisRow += this.cells[c][r] === undefined ? this.#emptyCell : this.cells[c][r]
+        thisRow += ` ${this.cells[c][r] === undefined ? this.#emptyCell : this.cells[c][r]} `
       }
 
       gridStr.unshift(thisRow)
@@ -106,5 +122,9 @@ class Grid {
 }
 
 module.exports = {
-  Grid
+  Grid,
+  DIR_UP,
+  DIR_DIAG_UP,
+  DIR_RIGHT,
+  DIR_DIAG_DOWN
 }
