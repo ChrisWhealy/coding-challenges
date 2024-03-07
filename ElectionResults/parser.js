@@ -8,8 +8,8 @@ const asPercentageOf = total => someValue => Math.floor((someValue / total) * 10
 const parse = line => {
   let parsedLine
 
-  let fragments = line.split(",")
-  let constituencyName = fragments[0].trim()
+  let fragments = line.split(",").map(f => f.trim())
+  let constituencyName = fragments[0]
 
   // If the first field contains either an integer or a party abbreviation, then bail out early because the constituency
   // name is missing and so we have no idea where these votes have been cast
@@ -28,8 +28,8 @@ const parse = line => {
   // Parse the remaining fragments
   for (let i = 1; i < fragments.length; i++) {
     // We should find a pair of values: total votes cast, party abbreviation
-    let maybeVoteCount = parseInt(fragments[i].trim())
-    let maybePartyName = getPartyName(fragments[i + 1].trim())
+    let maybeVoteCount = parseInt(fragments[i])
+    let maybePartyName = getPartyName(fragments[i + 1])
 
     // Is the first field a vote count?
     if (isNaN(maybeVoteCount)) {

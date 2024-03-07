@@ -1,20 +1,20 @@
 # Black Jack
 
 ## Model the game
-* create a single deck of playing cards
-* two players (called Sam and the Dealer) who will play against each other
-* each player is given two cards from the top of a shuffled deck of cards
+* Create a single deck of playing cards
+* The game is played between two players (called Sam and the Dealer)
+* Each player is given two cards from the top of a shuffled deck of cards
 
 ## Rules to Implement
 
-* Sam and the dealer are both dealt 2 cards
-* If either (or both) of them holds 21, the winner(s) is/are declared
-* Sam plays first and keeps drawing cards until his total reaches at 17 or more
-* If Sam's total is > 21, he is bust and the dealer starts to play
-* If Sam's total is >= 17 but <= 21, then he sticks and the dealer starts to play
-* The Dealer only needs to draw a card if his total is < 17
+* Sam and the dealer are both dealt an initial hand of 2 cards
+* If either (or both) of them holds 21, the winner(s) is/are immediately declared
+* Sam plays first and keeps drawing cards until his total reaches at least 17
+* If Sam's total exceeds 21, he is bust and the dealer now starts to play
+* If Sam's total is between 17 and 21 inclusive, then he sticks and the dealer starts to play
+* The Dealer only needs to draw a card if his initial total is less than 17
 * The Dealer keeps drawing until either he goes bust or his total exceeds Sam's
-* The winner is then declared, bearing in mind that it could be a tie
+* The winner is then declared, bearing in mind that there could be zero, one or two winners
 
 ## Execution
 
