@@ -16,6 +16,7 @@ const playConnect4OnGrid = (cols, rows) =>
     let grid = new Grid(cols, rows)
     let result = { winner: null, grid }
 
+    // Apply the moves until we either find a winner or run out of moves
     for (let m = 0; m < moves.length; m++) {
       let maybeWinner = grid.addCounter.apply(grid, moves[m])
 

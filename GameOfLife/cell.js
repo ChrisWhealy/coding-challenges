@@ -54,14 +54,15 @@ class Cell {
     let nCount = this.countNeighbours(board)
     let newCell = new Cell(this.rowIdx, this.colIdx)
 
+    // Apply state transition rules
     if (this.state === 1 && (nCount < 2 || nCount > 3)) {
-      // Cell dies either from loneliness or over-crowding
+      // The living cell dies either from loneliness or over-crowding
       newCell.state = 0
     } else if (this.state === 0 && nCount === 3) {
-      // Cell comes to life
+      // The dead cell comes to life
       newCell.state = 1
     } else {
-      // Cell's current state is preserved
+      // The cell's current state is preserved
       newCell.state = this.state
     }
 

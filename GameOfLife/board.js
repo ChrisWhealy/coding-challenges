@@ -5,6 +5,7 @@ class Board {
   rowCount = 0
   colCount = 0
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Create a new board initialised with empty cells
   constructor(rows, cols) {
     this.rowCount = rows
@@ -20,7 +21,7 @@ class Board {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // Calculate the next state of the board
   nextBoardState() {
-    // Create a new board
+    // Create a new board based on the state of the current board
     let newBoard = this.cells.reduce(
       (newBoard, oldRow) => {
         newBoard.push(oldRow.reduce(
@@ -32,7 +33,7 @@ class Board {
         return newBoard
       }, [])
 
-    // Replace existing board with new one
+    // Overwrite the current board with the new one
     this.cells = newBoard
 
     return this
